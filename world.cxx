@@ -157,7 +157,7 @@ namespace csis3700 {
      * Update the state of the world based on the event ev.
      */
     void world::handle_event(ALLEGRO_EVENT ev) {
-    	
+
 		/*
 		//lab 7: mouse button was released, tell each sprite to go
 		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
@@ -242,10 +242,12 @@ namespace csis3700 {
 					currentState = change_game_state(currentState);
 					break;
 
+				/*
+				//I don't think we need this bit
 				case ALLEGRO_KEY_ESCAPE:
 					//exit
-					doexit = true;
-					break;
+					
+					break;*/
 			}
 		}
 	}

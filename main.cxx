@@ -97,8 +97,10 @@ int main(int argc, char **argv){
 
    double time = 0;
    bool redraw = true; // when true, the world is painting for the first time
+
    
    ALLEGRO_EVENT ev; //event type
+   
    do
    {
       al_wait_for_event(event_queue, &ev);
