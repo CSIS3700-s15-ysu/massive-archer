@@ -77,6 +77,8 @@ namespace csis3700 {
 	public:
 		
 	protected:
+	ALLEGRO_BITMAP *sprite_image = al_load_bitmap("ghost.png");
+	
 		
   
   };
@@ -90,7 +92,7 @@ namespace csis3700 {
 		
 		
 	protected:
-  
+	ALLEGRO_BITMAP *sprite_image = al_load_bitmap("wand.png");
   
   };
   
