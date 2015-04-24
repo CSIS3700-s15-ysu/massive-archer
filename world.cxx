@@ -51,6 +51,7 @@ namespace csis3700 {
 		
 		
 		//load bitmaps
+    	ALLEGRO_BITMAP *sprite_image;
     	
     	image = al_load_bitmap("graveyard.png");
  
@@ -64,7 +65,7 @@ namespace csis3700 {
    				
 		//loads sprite image and tells it where to draw
 		//NOT ACTUALLY DRAWING
-		
+		sprite_image = al_load_bitmap("ghost.png");
 		for (int i=1; i<3; i++){
     		
     		if (i==1) {
@@ -83,7 +84,7 @@ namespace csis3700 {
 				y = world::HEIGHT * 0.75;	
 			}
 			
-			the_sprites.push_back(new sprite(sprite::sprite_image, world::WIDTH,
+			the_sprites.push_back(new sprite(sprite_image, world::WIDTH,
 				world::HEIGHT, x, y));
     	}
 		
