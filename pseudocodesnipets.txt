@@ -1,0 +1,96 @@
+//suggestions from Dr S:
+void begin_explosion (float x, float y, bool hit) {
+//create proper explosion type
+//update world state
+
+//first, find out where the shell hit
+
+
+//did shell hit tank? (impact_location = tank_location)
+	yes = display hit sprite at impact_location
+	no = display miss sprite at impact_location
+
+}
+
+void end_explosion (explosion_sprite *) {
+//remove explosion sprite
+//update world state from IMPACT to AIMING or GAME_OVER }
+
+//Annie's pseudocode
+
+somereturntype move_muzzle (angle_from_user) {
+	//not sure if Allegro needs radians. if not, comment out next line
+	rad_angle_from_user = angle_from_user * (pi/180);
+	
+	//may need to multiply by something to get the muzzle to rotate correct way
+	
+	//tell muzzle sprite to rotate 
+	
+}
+
+
+//math for the shell
+somereturntype initial_shell_velocity (velocity_from_user, angle_from_user) {
+	rad_angle_from_user = angle_from_user * (pi/180)
+	initial_v_y = velocity_from_user * sin(rad_angle_from_user);
+	initial_v_x = velocity_from_user * cos(rad_angle_from_user);
+	
+	return initial_v_x, initial_v_y
+	}
+	
+	
+	//position after time step (t) is ((x(t + delta_t)), (y(t+ delta_t)))
+	//x_position, y_position are intended to represent ((x(t + delta_t)), (y(t+ delta_t)))
+	
+somereturntype shell_path (lots of stuff I'm sure) {
+	accel_x = 0; //technically not needed
+	accel_y = 300;
+
+	//first pass velocity_x_at_t will be initial_v_x
+	//velocity_x also won't change, so there's literally nothing else
+	//to do to it
+	
+	velocity_x_at_t = initial_v_x;
+	
+	//first pass velocity_y_at_t will be initial_v_y
+	//after that recursion may be a good idea -- splitting it
+	//into another function will help with that
+	
+	//velocity_x = velocity_x_at_t + (accel_x * delta_t)
+	velocity_x = velocity_x_at_t; 
+	//velocity_x and velocity_x_at_t aren't going to change
+	velocity_y = velocity_y_at_t + (accel_y * delta_t)
+	
+	//would we use a loop or recursion for this?
+	//loop or recursion would end when y_position = HEIGHT * 0.75 (height of tanks)
+	//we'll want to return the x_position
+	x_position = x_position_at_t + (velocity_x_at_t * delta_t)
+	y_position = y_position_at_t + (velocity_y_at_t * delta_t)
+
+}	
+
+
+}
+
+
+
+void aim_angle (key event) {
+	if key event = up then
+		increase angle
+		
+	else
+		decrease angle
+		
+	tell sprite to move
+}
+
+void aim_velocity (key event) {
+	if key event = right then
+		increase velocity
+		
+	else
+		decrease velocity
+		
+	tell sprite to move
+}
+

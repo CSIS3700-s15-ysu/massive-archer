@@ -173,8 +173,7 @@ namespace csis3700 {
 					//up arrow was released
 			
 					if (currentState == AIMING) {
-        				//increase angle
-        				//tell sprite to move
+						//call aiming function (still pseudo code)
         				//update text on screen
         			}
 				break;
@@ -182,8 +181,7 @@ namespace csis3700 {
 				case ALLEGRO_KEY_DOWN:
 					//down arrow was released
 					if (currentState == AIMING) {
-        				//decrease angle
-        				//tell sprite to move
+						//call aiming function (still pseudo code)
         				//update text on screen
         			}
 				break;
@@ -192,7 +190,7 @@ namespace csis3700 {
 					//right arrow was released
 			
 					if (currentState == AIMING) {
-        				//increase velocity
+        				//call aiming function (still pseudo code)
         				//update text on screen
         				
         			}
@@ -204,7 +202,7 @@ namespace csis3700 {
 					//left arrow was released
 			
 					if (currentState == AIMING) {
-        				//decrease velocity
+        				//call aiming function (still pseudo code)
         				//update text on screen        				
         			}
 
@@ -214,7 +212,9 @@ namespace csis3700 {
 					//enter key was released
 					if (currentState == AIMING) {
         				//done entering stuff, fire
+												
         				//change game state to IMPACT
+						//should probably call the change state fnc instead
         				currentState = IMPACT;
         				//add text to screen instructing user to press enter again
         					//cause lazy
