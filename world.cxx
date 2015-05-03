@@ -26,9 +26,7 @@ use al_clear_to_color or al_draw_bitmap to redraw background image/color
 when event occurs, send messages to sprites
 */
 
-
 /** WHEN IN DOUBT USE A DAMN ITERATOR **/
-
 
 namespace csis3700 {
 
@@ -45,43 +43,39 @@ namespace csis3700 {
 		turns = 0;
 		player_turn = 1;
 		hit_tank = false;
+		float x, y;
 		
-		//load bitmaps
-		ALLEGRO_BITMAP *sprite_image;
-		
-		image = al_load_bitmap("graveyard.png");
+		//Background image
+		//NOT ACTUALLY DRAWING
+		background_image = al_load_bitmap("graveyard.png");
  
-		if(!image) {
+		if(!background_image) {
 			al_show_native_message_box(display, "Error", "Error", "Failed to load background image!", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 			al_destroy_display(display);
-						
 		}
 		
-		float x, y;
-				
-		//loads sprite image and tells it where to draw
+		//Ghosts
+		//loads ghost sprite image and tells it where to draw
 		//NOT ACTUALLY DRAWING
-		sprite_image = al_load_bitmap("ghost.png");
+		ALLEGRO_BITMAP *ghost_image = al_load_bitmap("ghost.png");
 
 		for (int i=1; i<3; i++){
-			
 			if (i==1) {
 				//i is equal to 1
 				//draw first tank
 				x = 100;
 				y = world::HEIGHT * 0.75;
 			}
-			
 			else {
 				//i is equal to 2
 				//draw second tank
 				//tank will need flipped -- change bitmap flag to flip
 				
-				x = world::WIDTH - 100;
+				x = world::WIDTH - 180; //image is 80px
 				y = world::HEIGHT * 0.75;	
 			}
 			
-			the_sprites.push_back(new sprite(sprite_image, world::WIDTH,
+			the_sprites.push_back(new sprite(ghost_image, world::WIDTH,
 				world::HEIGHT, x, y));
 		}
 	}
@@ -91,7 +85,7 @@ namespace csis3700 {
 	 */
 	 //this includes bitmaps assigned to sprites
 	world::~world() {
-		al_destroy_bitmap(image);
+		al_destroy_bitmap(background_image);
 	
 	}
 
@@ -142,7 +136,6 @@ namespace csis3700 {
 			//odd numbered turn
 			//it's player 1's turn
 			return 1;
-	
 		}
 	}
 
@@ -267,7 +260,7 @@ namespace csis3700 {
 	 */
 	void world::draw(ALLEGRO_DISPLAY *display) {
 		//draw background
-		al_draw_bitmap(image,0,0,0);
+		al_draw_bitmap(background_image,0,0,0);
 		
 		//for loop with iterator to get sprites to load
 		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {

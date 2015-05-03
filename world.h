@@ -84,7 +84,7 @@ namespace csis3700 {
 			void draw(ALLEGRO_DISPLAY *display);
 
 		private:
-			ALLEGRO_BITMAP *image;
+			ALLEGRO_BITMAP *background_image;
 			std::vector<sprite*> the_sprites;
 			game_state_t currentState;
 			bool hit_tank;
