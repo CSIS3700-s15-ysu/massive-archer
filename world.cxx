@@ -30,45 +30,42 @@ when event occurs, send messages to sprites
 /** WHEN IN DOUBT USE A DAMN ITERATOR **/
 
 
-
-
 namespace csis3700 {
 
-    /**
-     * Construct the world. The display is passed in simply to make it
-     * possible to modify options or access the backbuffer. DO NOT
-     * store the display in an instance variable. DO NOT start drawing
-     * on the screen. Just load bitmaps etc.
-     */
-    world::world(ALLEGRO_DISPLAY *display, std::size_t window_width, std::size_t window_height) {
-    	
-    	//set default game state
+	/**
+	 * Construct the world. The display is passed in simply to make it
+	 * possible to modify options or access the backbuffer. DO NOT
+	 * store the display in an instance variable. DO NOT start drawing
+	 * on the screen. Just load bitmaps etc.
+	 */
+	world::world(ALLEGRO_DISPLAY *display, std::size_t window_width, std::size_t window_height) {
+		
+		//set default game state
 		currentState = AIMING;
 		turns = 0;
 		player_turn = 1;
 		hit_tank = false;
 		
-		
-		
 		//load bitmaps
-    	ALLEGRO_BITMAP *sprite_image;
-    	
-    	image = al_load_bitmap("graveyard.png");
+		ALLEGRO_BITMAP *sprite_image;
+		
+		image = al_load_bitmap("graveyard.png");
  
-   		if(!image) {
-      		al_show_native_message_box(display, "Error", "Error", "Failed to load background image!", NULL, ALLEGRO_MESSAGEBOX_ERROR);
-      		al_destroy_display(display);
-      	     	      	
-   		}
-   		
-   		float x, y;
-   				
+		if(!image) {
+			al_show_native_message_box(display, "Error", "Error", "Failed to load background image!", NULL, ALLEGRO_MESSAGEBOX_ERROR);
+			al_destroy_display(display);
+						
+		}
+		
+		float x, y;
+				
 		//loads sprite image and tells it where to draw
 		//NOT ACTUALLY DRAWING
 		sprite_image = al_load_bitmap("ghost.png");
+
 		for (int i=1; i<3; i++){
-    		
-    		if (i==1) {
+			
+			if (i==1) {
 				//i is equal to 1
 				//draw first tank
 				x = 100;
@@ -86,40 +83,36 @@ namespace csis3700 {
 			
 			the_sprites.push_back(new sprite(sprite_image, world::WIDTH,
 				world::HEIGHT, x, y));
-    	}
-		
-    
-    }
+		}
+	}
 
-    /**
-     * Free any resources being used by the world.
-     */
-     //this includes bitmaps assigned to sprites
-    world::~world() {
-    	al_destroy_bitmap(image);
-    
-    }
+	/**
+	 * Free any resources being used by the world.
+	 */
+	 //this includes bitmaps assigned to sprites
+	world::~world() {
+		al_destroy_bitmap(image);
+	
+	}
 
-    /**
-     * Block the copy constructor.  Worlds should not be copied to
-     * just assert(false)
-     */
-    world::world(const world& other) { assert(false);}
+	/**
+	 * Block the copy constructor.  Worlds should not be copied to
+	 * just assert(false)
+	 */
+	world::world(const world& other) { assert(false);}
 
-    /**
-     * Block operator =.  Worlds should not be assigned.
-     */
-    world& world::operator =(const world& other) { assert(false);}
- 
- 
- 	/**
-    * Changes the game state.
-    */
-    world::game_state_t world::change_game_state (game_state_t incoming_state) {
-    	if (incoming_state == AIMING) {
+	/**
+	 * Block operator =.  Worlds should not be assigned.
+	 */
+	world& world::operator =(const world& other) { assert(false);}
+
+	/**
+	* Changes the game state.
+	*/
+	world::game_state_t world::change_game_state (game_state_t incoming_state) {
+		if (incoming_state == AIMING) {
 			return IMPACT;
 		}
-		
 		
 		else if (incoming_state == IMPACT) {
 			if (hit_tank == true) {
@@ -133,12 +126,12 @@ namespace csis3700 {
 			}
 		}
 	}
- 
- 	/**
-     * Changes player turn.
-     */
- 
- 	int world::which_player (int turns) {
+
+	/**
+	 * Changes player turn.
+	 */
+
+	int world::which_player (int turns) {
 		if (turns % 2 == 0) {
 			//even numbered turn
 			//it's player 2's turn
@@ -152,11 +145,11 @@ namespace csis3700 {
 	
 		}
 	}
- 
-    /**
-     * Update the state of the world based on the event ev.
-     */
-    void world::handle_event(ALLEGRO_EVENT ev) {
+
+	/**
+	 * Update the state of the world based on the event ev.
+	 */
+	void world::handle_event(ALLEGRO_EVENT ev) {
 
 		/*
 		//lab 7: mouse button was released, tell each sprite to go
@@ -174,26 +167,26 @@ namespace csis3700 {
 			
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
-        				//update text on screen
-        			}
+						//update text on screen
+					}
 				break;
 
 				case ALLEGRO_KEY_DOWN:
 					//down arrow was released
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
-        				//update text on screen
-        			}
+						//update text on screen
+					}
 				break;
 
 				case ALLEGRO_KEY_RIGHT:
 					//right arrow was released
 			
 					if (currentState == AIMING) {
-        				//call aiming function (still pseudo code)
-        				//update text on screen
-        				
-        			}
+						//call aiming function (still pseudo code)
+						//update text on screen
+						
+					}
 
 				break;
 
@@ -202,26 +195,26 @@ namespace csis3700 {
 					//left arrow was released
 			
 					if (currentState == AIMING) {
-        				//call aiming function (still pseudo code)
-        				//update text on screen        				
-        			}
+						//call aiming function (still pseudo code)
+						//update text on screen        				
+					}
 
 				break;
 
 				case ALLEGRO_KEY_ENTER:
 					//enter key was released
 					if (currentState == AIMING) {
-        				//done entering stuff, fire
+						//done entering stuff, fire
 												
-        				//change game state to IMPACT
+						//change game state to IMPACT
 						//should probably call the change state fnc instead
-        				currentState = IMPACT;
-        				//add text to screen instructing user to press enter again
-        					//cause lazy
-        			}
-        			
-        			else if (currentState == IMPACT) {
-        				//do math to see where impact occurs
+						currentState = IMPACT;
+						//add text to screen instructing user to press enter again
+							//cause lazy
+					}
+					
+					else if (currentState == IMPACT) {
+						//do math to see where impact occurs
 						//did it hit the other tank?
 							//yes: show tank hit sprite
 								//change game state to GAME_OVER
@@ -232,8 +225,8 @@ namespace csis3700 {
 								++turns;
 								//change current player
 								player_turn = which_player(turns);
-        			}
-        									
+					}
+											
 				break;
 
 				case ALLEGRO_KEY_SPACE:
@@ -252,40 +245,35 @@ namespace csis3700 {
 		}
 	}
 
-	
+	/**
+	 * Advance the state of the world forward by the specified time.
+	 */
+	void world::advance_by_time(double dt) {    
+		// the world itself doesn't do anything when time is just advancing
 		
-
-
-
-    /**
-     * Advance the state of the world forward by the specified time.
-     */
-    void world::advance_by_time(double dt) {    
-    	// the world itself doesn't do anything when time is just advancing
-    	
-    	
-    	//tell sprites to advance by time
-    	for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
+		
+		//tell sprites to advance by time
+		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
 			//tell sprites to update themselves
 			(*it)->sprite::advance_by_time(dt);
 		}
-    
-    }
+	
+	}
 
-    /**
-     * Draw the world. Note that the display variable is passed only
-     * because it might be needed to switch the target bitmap back to
-     * the backbuffer.
-     */
-    void world::draw(ALLEGRO_DISPLAY *display) {
-    	//draw background
-    	al_draw_bitmap(image,0,0,0);
-    	
-    	//for loop with iterator to get sprites to load
-    	for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
+	/**
+	 * Draw the world. Note that the display variable is passed only
+	 * because it might be needed to switch the target bitmap back to
+	 * the backbuffer.
+	 */
+	void world::draw(ALLEGRO_DISPLAY *display) {
+		//draw background
+		al_draw_bitmap(image,0,0,0);
+		
+		//for loop with iterator to get sprites to load
+		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
-		}    
-    }
-    
+		}
+	}
+	
 }
