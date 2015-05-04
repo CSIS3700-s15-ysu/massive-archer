@@ -367,7 +367,6 @@ namespace csis3700 {
 				
 				
 				//velocity stuff here
-				//advance by time the text
 				if (key_left == true) {
 					key_left = false;			
 					if (velocity > 10) {
@@ -408,8 +407,11 @@ namespace csis3700 {
 		}
 		
 		
-		//draw velocity text here
-
+		//DRAW THE DAMN VELOCITY TEXT HERE
+		//al_draw_text or al_draw_justified_text
+		al_draw_text(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, world::HEIGHT/2, ALLEGRO_ALIGN_CENTER, "Your Text Here!"); 
+		
+		
 
 	}
 	
