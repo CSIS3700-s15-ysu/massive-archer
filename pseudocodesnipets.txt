@@ -18,24 +18,14 @@ void end_explosion (explosion_sprite *) {
 
 //Annie's pseudocode
 
-somereturntype move_muzzle (angle_from_user) {
-	//not sure if Allegro needs radians. if not, comment out next line
-	rad_angle_from_user = angle_from_user * (pi/180);
-	
-	//may need to multiply by something to get the muzzle to rotate correct way
-	
-	//tell muzzle sprite to rotate 
-	
-}
-
-
 //math for the shell
-somereturntype initial_shell_velocity (velocity_from_user, angle_from_user) {
-	rad_angle_from_user = angle_from_user * (pi/180)
+float initial_shell_velocity (float velocity_from_user, float angle_from_user) {
+	//rad_angle_from_user = angle_from_user * (pi/180)
+	float initial_v_x, initial_v_y;
 	initial_v_y = velocity_from_user * sin(rad_angle_from_user);
 	initial_v_x = velocity_from_user * cos(rad_angle_from_user);
 	
-	return initial_v_x, initial_v_y
+	return initial_v_x, initial_v_y;
 	}
 	
 	
