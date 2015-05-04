@@ -74,14 +74,14 @@ namespace csis3700 {
 			if (i==1) {
 				//i is equal to 1
 				//draw first tank
-				x = 360;
+				x = 200;
 				y = (world::HEIGHT * 0.75) + 25;
 			}
 			else {
 				//i is equal to 2
 				//draw second tank
 								
-				x = world::WIDTH - 360;
+				x = world::WIDTH - 300;
 				y = (world::HEIGHT * 0.75) + 25;
 			}
 			
