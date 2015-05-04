@@ -150,33 +150,10 @@ namespace csis3700 {
 				)
 			);
 		}
-		/*	
-		//Velocity squares
-		//loads velocity square sprite image and tells it where to draw
-		//NOT ACTUALLY DRAWING	
-		ALLEGRO_BITMAP *velocity_image = al_load_bitmap("velocitysquare.png");
 		
-		for (int i=1; i=<5; i++){
-			x = ((world::WIDTH * 0.5) - 160) + i*32;
-			y = (world::HEIGHT * 0.5);
-			
-			velocity_sprites.push_back(
-				new sprite(
-					wand_image,
-					world::WIDTH,
-					world::HEIGHT,
-					x,
-					y,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0
-				)
-			);
-		}
-		*/
+		//setting up font
+		ALLEGRO_FONT *velocity_font = al_load_ttf_font("PRIMETIME.ttf",36,NULL);
+		
 	}
 
 	/**
@@ -185,6 +162,7 @@ namespace csis3700 {
 	 //this includes bitmaps assigned to sprites
 	world::~world() {
 		al_destroy_bitmap(background_image);
+		al_destroy_font(velocity_font);
 	
 	}
 
@@ -277,6 +255,7 @@ namespace csis3700 {
 
 				case ALLEGRO_KEY_RIGHT:
 					//right arrow was released
+					key_right = true;
 			
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
@@ -289,6 +268,7 @@ namespace csis3700 {
 
 				case ALLEGRO_KEY_LEFT:
 					//left arrow was released
+					key_left = true;
 			
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
@@ -382,12 +362,27 @@ namespace csis3700 {
 					(*it)->sprite::advance_by_time(dt);
 				}
 
+				//wands rotating
 				wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
 				
-				/*
-				//velocity sprite stuff here
-				velocity_sprites[player_turn]->sprite::advance_by_time(key_left, key_right, dt);
-				*/
+				
+				//velocity stuff here
+				//advance by time the text
+				if (key_left == true && ) {
+					key_left = false;			
+					if (velocity > 10) {
+						velocity -= 10;
+					}
+				}
+				
+				if (key_right == true && ) {			
+					key_right = false;
+					if (velocity < 90) {
+						velocity += 10;
+					}
+				}   
+				
+				
 			}
 		}
 	}
@@ -411,12 +406,10 @@ namespace csis3700 {
 			//draw sprites
 			(*it)->draw(display);
 		}
-		/*
-		for (std::vector<sprite*>::iterator it = velocity_sprites.begin(); it != velocity_sprites.end(); ++it) {
-			//draw sprites
-			(*it)->draw(display);
-		}
-		*/
+		
+		
+		//draw velocity text here
+
 
 	}
 	

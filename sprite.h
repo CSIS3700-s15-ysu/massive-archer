@@ -59,8 +59,6 @@ namespace csis3700 {
 
 			void advance_by_time(double dt, bool &key_up, bool &key_down);
 			
-			//void velocity_advance_by_time(double dt, bool &key_right, bool &key_left);
-
 			/** Return my bitmap */
 			ALLEGRO_BITMAP *get_bitmap() const;
 
@@ -82,7 +80,6 @@ namespace csis3700 {
 			float center_y;
 			int conditions;
 			bool move;
-			float velocity;
 	};
 
 	class tank_sprite : public sprite {

@@ -105,6 +105,8 @@ namespace csis3700 {
 			bool key_enter;
 
 			bool player_turn;
+			
+			float velocity;
 	};
 }
 
