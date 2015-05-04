@@ -106,3 +106,21 @@ float complete_shell_x_location (float velocity_from_user, float angle_from_user
 	
 	return x_position;
 }
+
+		//do the shell sprites get drawn at this time?
+		//fuck it, let's do it.
+		for (std::vector<sprite*>::iterator it = shell_sprites.begin(); it != shell_sprites.end(); ++it) {
+			//draw sprites
+			(*it)->draw(display);
+		}
+
+
+		
+
+key enter:
+draw shells
+get current player
+
+
+animating trajectory:
+add ending condition

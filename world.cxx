@@ -75,14 +75,14 @@ namespace csis3700 {
 				//i is equal to 1
 				//draw first tank
 				x = 250;
-				y = (world::HEIGHT * 0.75);
+				y = (world::HEIGHT * 0.75) + 10;
 			}
 			else {
 				//i is equal to 2
 				//draw second tank
 								
 				x = world::WIDTH - 300;
-				y = (world::HEIGHT * 0.75);
+				y = (world::HEIGHT * 0.75) + 10;
 			}
 			
 			shell_sprites.push_back(
@@ -343,12 +343,30 @@ namespace csis3700 {
 
 		if (animating_trajectory) {
 			//animate that shell_sprite
-			//if shell hit other player, shot_is_correct = true;
 			shell_sprites[player_turn]->sprite::shell_advance_by_time(dt, animating_trajectory);
+			
+			//this is kind of pseudocode-ish
+			if (sprite_y == world::HEIGHT) {
+				//shell hit ground
+				shot_hit_something = true;
+			}
+			
+			else if ((sprite_x == tank_x) && (sprite_y == tank_y)) {
+				//shell hit other tank
+				shot_hit_something = true;
+				shot_is_correct = true;
+			}
+			
+			else {
+				//shell hasn't impacted yet
+				shot_hit_something = false;
+				shot_is_correct = false;			
+			}
 			
 
 			if (shot_is_correct && shot_hit_something) {
 				//game over, show victory screen + ending explosion
+				animating_trajectory = false;
 			}
 			else if (shot_hit_something) {
 				//show explosion
@@ -358,7 +376,13 @@ namespace csis3700 {
 		else {
 			if (key_enter) {
 				//determine if the rocket thing will hit the other player
+				//draw sprites here
+				shell_sprites[player_turn]->draw(display);
+				
+				
 				//do math here
+				
+				
 				
 				//set initial velocity
 				shell_sprites[player_turn]->sprite::initial_shell_velocity(velocity);
@@ -425,13 +449,6 @@ namespace csis3700 {
 		}
 
 		for (std::vector<sprite*>::iterator it = wand_sprites.begin(); it != wand_sprites.end(); ++it) {
-			//draw sprites
-			(*it)->draw(display);
-		}
-		
-		//do the shell sprites get drawn at this time?
-		//fuck it, let's do it.
-		for (std::vector<sprite*>::iterator it = shell_sprites.begin(); it != shell_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
 		}

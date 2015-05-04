@@ -82,15 +82,8 @@ namespace csis3700 {
 
 	//for wand movement
 	void sprite::advance_by_time(double dt, bool &key_up, bool &key_down) {
-		//get sprite height and width
-		int sprite_height=al_get_bitmap_height(get_bitmap());
-		int sprite_width=al_get_bitmap_width(get_bitmap());
-	
-		//tell sprites what to do when time advances
 		
-		//if sprites haven't been told to move, do nothing
-		
-		//if sprites have been told to move, do something
+		//if sprites have been told to update, do something
 		if (key_up == true) {
 			angle = angle - .5;
 			key_up = false;
@@ -100,25 +93,16 @@ namespace csis3700 {
 			key_down = false;
 		}   
 	}
-
+	
 	//for shell sprites
-	void sprite::shell_advance_by_time(double dt, bool animating_trajectory) {
+	void sprite::shell_advance_by_time(double dt) {
 		//tell sprites what to do when time advances
-		
-		//if sprites haven't been told to move, do nothing
-		
-		//if sprites have been told to move, do something
-		if (animating_trajectory == true) {
-			//ok, time to change stuff
 						
-			//update the x and y positions
-			x = shell_x_location(x, dt);
-			y = shell_y_location(y, dt);
-			
-			
-		
-		}
-		
+		//update the x and y positions
+		x = shell_x_location(x, dt);
+		y = shell_y_location(y, dt);
+
+		//check for impact?
 	}
 	
 	
@@ -146,7 +130,7 @@ namespace csis3700 {
 		return vy;
 	}
 	
-	//do I need to pass vx if vx is essentially constant?
+
 	float sprite::shell_x_location (float incoming_x_position, float dt) {
 	
 		x = incoming_x_position + (vx * dt);
