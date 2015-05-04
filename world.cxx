@@ -85,9 +85,9 @@ namespace csis3700 {
 				y = (world::HEIGHT * 0.75) + 25;
 			}
 			
-			wand_sprites.push_back(
+			shell_sprites.push_back(
 				new sprite(
-					wand_image,
+					shell_image,
 					world::WIDTH,
 					world::HEIGHT,
 					x,
@@ -344,7 +344,7 @@ namespace csis3700 {
 		if (animating_trajectory) {
 			//animate that shell_sprite
 			//if shell hit other player, shot_is_correct = true;
-			shell_sprites[player_turn]->sprite::advance_by_time(/*make new fnc*/);
+			shell_sprites[player_turn]->sprite::shell_advance_by_time(dt, animating_trajectory);
 			
 
 			if (shot_is_correct && shot_hit_something) {
@@ -361,7 +361,7 @@ namespace csis3700 {
 				//do math here
 				
 				//set initial velocity
-				sprite::initial_shell_velocity (velocity);
+				sprite::initial_shell_velocity(velocity);
 				//launch the rocket thing!
 				animating_trajectory = true;
 				

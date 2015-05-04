@@ -126,7 +126,7 @@ namespace csis3700 {
 	
 	//originals are in pseudocodesnippets.txt -- mostly I changed the functions from floats to voids
 	//I think this is the best place to put it since we're changing the sprites x, y, vx, vy
-	void sprite::initial_shell_velocity (float &velocity_from_user) {
+	void sprite::initial_shell_velocity (float velocity_from_user) {
 
 		vy = velocity_from_user * sin(angle);
 		vx = velocity_from_user * cos(angle);
