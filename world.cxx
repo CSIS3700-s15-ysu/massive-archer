@@ -384,7 +384,7 @@ namespace csis3700 {
 				wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
 				
 				//velocity sprite stuff here
-				velocity_sprites->sprite::advance_by_time(key_left, key_right, dt);
+				velocity_sprites[player_turn]->sprite::advance_by_time(key_left, key_right, dt);
 			}
 		}
 	}
