@@ -149,6 +149,7 @@ namespace csis3700 {
 					0
 				)
 			);
+		}
 			
 		//Velocity squares
 		//loads velocity square sprite image and tells it where to draw
