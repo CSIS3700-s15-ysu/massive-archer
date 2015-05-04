@@ -368,14 +368,14 @@ namespace csis3700 {
 				
 				//velocity stuff here
 				//advance by time the text
-				if (key_left == true && ) {
+				if (key_left == true) {
 					key_left = false;			
 					if (velocity > 10) {
 						velocity -= 10;
 					}
 				}
 				
-				if (key_right == true && ) {			
+				if (key_right == true) {			
 					key_right = false;
 					if (velocity < 90) {
 						velocity += 10;
