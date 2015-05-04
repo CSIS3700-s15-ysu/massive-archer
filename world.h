@@ -93,7 +93,9 @@ namespace csis3700 {
 
 			game_state_t currentState;
 
-			bool hit_tank;
+			bool shot_hit_something;
+			bool shot_is_correct;
+			bool animating_trajectory;
 
 			bool key_up;
 			bool key_down;

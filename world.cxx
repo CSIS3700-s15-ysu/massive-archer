@@ -40,13 +40,18 @@ namespace csis3700 {
 		
 		//set default game state
 		currentState = AIMING;
+		animating_trajectory = false;
+		shot_is_correct = false;
+		shot_hit_something = false;
 		//turns = 0;
-		player_turn = 1;
-		hit_tank = false;
+		player_turn = 0;
+		//hit_tank = false;
 		float x, y;
 		float angle;
 		float center_x;
 		float center_y;
+
+
 
 		//set the default key states
 		key_up = false;
@@ -176,7 +181,7 @@ namespace csis3700 {
 		}
 		
 		else if (incoming_state == IMPACT) {
-			if (hit_tank == true) {
+			if (shot_is_correct && shot_hit_something) {
 				//the shell hit the tank
 				return GAME_OVER;
 			}
@@ -267,6 +272,8 @@ namespace csis3700 {
 
 				case ALLEGRO_KEY_ENTER:
 					//enter key was released
+					key_enter = true;
+
 					if (currentState == AIMING) {
 						//done entering stuff, fire
 												
@@ -314,20 +321,43 @@ namespace csis3700 {
 	 */
 	void world::advance_by_time(double dt) {    
 		// the world itself doesn't do anything when time is just advancing
-		
-		//tell sprites to advance by time
-		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
-			//tell sprites to update themselves
-			(*it)->sprite::advance_by_time(dt);
+
+		if (animating_trajectory) {
+			//animate that shell_sprite
+
+			if (shot_is_correct && shot_hit_something) {
+				//game over, show victory screen + ending explosion
+			}
+			else if (shot_hit_something) {
+				//show explosion
+				animating_trajectory = false;
+			}
 		}
+		else {
+			if (key_enter) {
+				//determine if the rocket thing will hit the other player
+				//if so, shot_is_correct = true;
+				//launch the rocket thing!
+				//animating_trajectory = true
 
-		//for (std::vector<sprite*>::iterator it = wand_sprites.begin(); it != wand_sprites.end(); ++it) {
-		//	//tell sprites to update themselves
-		//	(*it)->sprite::advance_by_time(dt, key_up, key_down);
-		//}
+				if (player_turn == 0) {
+					player_turn = 1;
+				}
+				else if (player_turn == 1) {
+					player_turn = 0;
+				}
+				key_enter = false;
+			}
+			else {
+				//tell sprites to advance by time
+				for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
+					//tell sprites to update themselves
+					(*it)->sprite::advance_by_time(dt);
+				}
 
-		wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
-	
+				wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
+			}
+		}
 	}
 
 	/**
