@@ -85,12 +85,12 @@ namespace csis3700 {
 
 		private:
 			ALLEGRO_BITMAP *background_image;
+			ALLEGRO_FONT *velocity_font;
 
 			//stores our crap
 			std::vector<sprite*> ghost_sprites;
 			std::vector<sprite*> wand_sprites;
 			std::vector<sprite*> shell_sprites;
-			//std::vector<sprite*> velocity_sprites;
 
 			game_state_t currentState;
 

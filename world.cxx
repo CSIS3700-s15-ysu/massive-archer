@@ -39,7 +39,7 @@ namespace csis3700 {
 	world::world(ALLEGRO_DISPLAY *display, std::size_t window_width, std::size_t window_height) {
 		
 		//set default game state
-		currentState = AIMING;
+		//currentState = AIMING;
 		animating_trajectory = false;
 		shot_is_correct = false;
 		shot_hit_something = false;
@@ -152,7 +152,7 @@ namespace csis3700 {
 		}
 		
 		//setting up font
-		ALLEGRO_FONT *velocity_font = al_load_ttf_font("PRIMETIME.ttf",36,NULL);
+		velocity_font = al_load_ttf_font("PRIMETIME.ttf",36,NULL);
 		
 	}
 
