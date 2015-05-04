@@ -18,6 +18,9 @@ We're using the smart world, dumb sprite model
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
 
+//to convert float to string
+#include <sstream>
+
 #include "sprite.h"
 
 namespace csis3700 {
