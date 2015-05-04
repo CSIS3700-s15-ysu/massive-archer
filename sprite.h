@@ -59,6 +59,15 @@ namespace csis3700 {
 
 			void advance_by_time(double dt, bool &key_up, bool &key_down);
 			
+			void shell_advance_by_time(double dt);
+			
+			/** Shell velocity stuff **/
+			void initial_shell_velocity (float &velocity_from_user);
+			void shell_y_velocity (float incoming_vy, float dt);
+			void shell_x_location (float incoming_x_position, float dt);
+			void shell_y_location (float incoming_y_position, float dt);
+			
+			
 			/** Return my bitmap */
 			ALLEGRO_BITMAP *get_bitmap() const;
 

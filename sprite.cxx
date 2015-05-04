@@ -1,10 +1,3 @@
-/*
-We're using the smart world, dumb sprite model
-
-This is still set up from Lab 7 -- lots of stuff will have to change
-
-*/
-
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
@@ -87,6 +80,7 @@ namespace csis3700 {
 		}    
 	}
 
+	//for wand movement
 	void sprite::advance_by_time(double dt, bool &key_up, bool &key_down) {
 		//get sprite height and width
 		int sprite_height=al_get_bitmap_height(get_bitmap());
@@ -105,6 +99,62 @@ namespace csis3700 {
 			angle = angle + .5;
 			key_down = false;
 		}   
+	}
+
+	//for shell sprites
+	void sprite::shell_advance_by_time(double dt, bool animating_trajectory) {
+		//tell sprites what to do when time advances
+		
+		//if sprites haven't been told to move, do nothing
+		
+		//if sprites have been told to move, do something
+		if (animating_trajectory == true) {
+			//ok, time to change stuff
+			//initial velocity vectors have already been calculated and stored (I hope)
+			
+			//need to update the x and y positions
+			//fuck. y += will just keep the shell going up and up and up
+			
+			
+		
+		}
+		
+	}
+	
+	
+	
+	
+	//originals are in pseudocodesnippets.txt -- mostly I changed the functions from floats to voids
+	//I think this is the best place to put it since we're changing the sprites x, y, vx, vy
+	void sprite::initial_shell_velocity (float &velocity_from_user) {
+
+		vy = velocity_from_user * sin(angle);
+		vx = velocity_from_user * cos(angle);
+
+	}
+	
+	//there's no function for shell_x_velocity because vx won't change (accel_x was defined as 0)
+	
+	void sprite::shell_y_velocity (float incoming_vy, float dt) {
+		//initial shell velocity (vy) has already been computed
+		//should also be able to call this whenever time updates
+
+		float accel_y = 300;
+	
+		vy = incoming_vy + (accel_y * dt);
+	}
+	
+	//do I need to pass vx if vx is essentially constant?
+	void sprite::shell_x_location (float incoming_x_position, float dt) {
+	
+		x = incoming_x_position + (vx * dt);
+
+	}	
+
+	void sprite::shell_y_location (float incoming_y_position, float dt) {
+	
+		y = incoming_y_position + (shell_y_velocity(vy, dt) * dt);
+
 	}
 		
 	void sprite::go() {

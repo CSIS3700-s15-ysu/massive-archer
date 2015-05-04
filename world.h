@@ -1,11 +1,3 @@
-/*
-This is still set up from Lab 7
-
-Lots of stuff will have to change
-
-We're using the smart world, dumb sprite model
-*/
-
 #ifndef WORLD_H
 #define WORLD_H
 
@@ -107,6 +99,7 @@ namespace csis3700 {
 			bool player_turn;
 			
 			float velocity;
+			
 	};
 }
 

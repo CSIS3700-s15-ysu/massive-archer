@@ -1,11 +1,3 @@
-/*
-we're using the smart world, dumb sprite model
-
-this is still set up from Lab 7 -- lots of stuff will have to change
-
-world is keeping track of game state
-*/
-
 #include "world.h"
 
 // allegro stuff
@@ -71,6 +63,45 @@ namespace csis3700 {
 			al_destroy_display(display);
 		}
 
+		
+		//shells
+		//loads shell sprites image and tells it where to draw
+		//NOT ACTUALLY DRAWING
+		ALLEGRO_BITMAP *shell_image = al_load_bitmap("shell_sprite.png");
+		
+		//these should draw somewhat close to the tip of the wands
+		for (int i=1; i<3; i++){
+			if (i==1) {
+				//i is equal to 1
+				//draw first tank
+				x = 360;
+				y = (world::HEIGHT * 0.75) + 25;
+			}
+			else {
+				//i is equal to 2
+				//draw second tank
+								
+				x = world::WIDTH - 360;
+				y = (world::HEIGHT * 0.75) + 25;
+			}
+			
+			wand_sprites.push_back(
+				new sprite(
+					wand_image,
+					world::WIDTH,
+					world::HEIGHT,
+					x,
+					y,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				)
+			);
+		}
+		
 		//Wands
 		//loads wand sprites image and tells it where to draw
 		//NOT ACTUALLY DRAWING
@@ -80,8 +111,8 @@ namespace csis3700 {
 			if (i==1) {
 				//i is equal to 1
 				//draw first tank
-				x = 190;
-				y = (world::HEIGHT * 0.75) + 35;
+				x = 190; //image is 180px wide, ghost is 80px wide
+				y = (world::HEIGHT * 0.75) + 35; //image is 70px tall
 				angle = 0;
 				center_x = 90;
 				center_y = 35;
@@ -89,9 +120,8 @@ namespace csis3700 {
 			else {
 				//i is equal to 2
 				//draw second tank
-				//tank will need flipped -- change bitmap flag to flip
-				
-				x = world::WIDTH - 190; //image is 80px
+								
+				x = world::WIDTH - 190;
 				y = (world::HEIGHT * 0.75) + 35;
 				angle = 3.14;
 				center_x = 90;
@@ -130,8 +160,7 @@ namespace csis3700 {
 			else {
 				//i is equal to 2
 				//draw second tank
-				//tank will need flipped -- change bitmap flag to flip
-				
+								
 				x = world::WIDTH - 180; //image is 80px
 				y = world::HEIGHT * 0.75;	
 			}
@@ -200,25 +229,6 @@ namespace csis3700 {
 		}
 	}
 
-	/**
-	 * Changes player turn.
-	 */
-
-	/*
-	int world::which_player (int turns) {
-		if (turns % 2 == 0) {
-			//even numbered turn
-			//it's player 2's turn
-			return 2;
-		}
-	
-		else {
-			//odd numbered turn
-			//it's player 1's turn
-			return 1;
-		}
-	}
-	*/
 
 	/**
 	 * Update the state of the world based on the event ev.
@@ -240,7 +250,7 @@ namespace csis3700 {
 					key_up = true;
 			
 					if (currentState == AIMING) {
-						//call aiming function (still pseudo code)
+						//call aiming function
 						//update text on screen
 					}
 				break;
@@ -250,7 +260,7 @@ namespace csis3700 {
 					key_down = true;
 
 					if (currentState == AIMING) {
-						//call aiming function (still pseudo code)
+						//call aiming function
 						//update text on screen
 					}
 				break;
@@ -260,7 +270,7 @@ namespace csis3700 {
 					key_right = true;
 			
 					if (currentState == AIMING) {
-						//call aiming function (still pseudo code)
+						//call aiming function
 						//update text on screen
 						
 					}
@@ -273,7 +283,7 @@ namespace csis3700 {
 					key_left = true;
 			
 					if (currentState == AIMING) {
-						//call aiming function (still pseudo code)
+						//call aiming function
 						//update text on screen        				
 					}
 
@@ -333,6 +343,9 @@ namespace csis3700 {
 
 		if (animating_trajectory) {
 			//animate that shell_sprite
+			//if shell hit other player, shot_is_correct = true;
+			shell_sprites[player_turn]->sprite::advance_by_time(/*make new fnc*/);
+			
 
 			if (shot_is_correct && shot_hit_something) {
 				//game over, show victory screen + ending explosion
@@ -345,9 +358,16 @@ namespace csis3700 {
 		else {
 			if (key_enter) {
 				//determine if the rocket thing will hit the other player
-				//if so, shot_is_correct = true;
+				//do math here
+				
+				//set initial velocity
+				sprite::initial_shell_velocity (velocity);
 				//launch the rocket thing!
-				//animating_trajectory = true
+				animating_trajectory = true;
+				
+				
+				
+				
 
 				if (player_turn == 0) {
 					player_turn = 1;
@@ -408,9 +428,14 @@ namespace csis3700 {
 			(*it)->draw(display);
 		}
 		
+		//do the shell sprites get drawn at this time?
+		//fuck it, let's do it.
+		for (std::vector<sprite*>::iterator it = shell_sprites.begin(); it != shell_sprites.end(); ++it) {
+			//draw sprites
+			(*it)->draw(display);
+		}
 		
 		//DRAW THE DAMN VELOCITY TEXT HERE
-		
 		al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %g", velocity); 
 		
 		
