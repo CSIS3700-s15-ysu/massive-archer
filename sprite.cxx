@@ -30,9 +30,11 @@ namespace csis3700 {
 				std::size_t world_height,
 				float initial_x,
 				float initial_y,
-				int initial_angle,
+				float initial_angle,
 				float initial_vx,
 				float initial_vy,
+				float initial_center_x,
+				float initial_center_y,
 				int intitial_conditions) {
 			//load images
 			sprite_image = initial_image;
@@ -43,6 +45,8 @@ namespace csis3700 {
 			angle = initial_angle;
 			vx = initial_vx;
 			vy = initial_vy;
+			center_x = initial_center_x;
+			center_y = initial_center_y;
 			conditions = intitial_conditions;
 			//tell sprites they aren't allowed to move by default
 			move = false;	
@@ -62,7 +66,9 @@ namespace csis3700 {
 		//sprites aren't allowed to move by default
 
 		//draw a single sprite at x,y
-		al_draw_bitmap(sprite_image,x,y,0);
+		//al_draw_bitmap(sprite_image,x,y,0);
+
+		al_draw_rotated_bitmap(sprite_image, center_x, center_y, x, y, angle, 0);
 	}
 
 	/** Move time forward by the specified amount */
@@ -77,8 +83,28 @@ namespace csis3700 {
 		
 		//if sprites have been told to move, do something
 		if (move == true) {
-				//do something depending on sprite type
+			//do something depending on sprite type
 		}    
+	}
+
+	void sprite::advance_by_time(double dt, bool &key_up, bool &key_down) {
+		//get sprite height and width
+		int sprite_height=al_get_bitmap_height(get_bitmap());
+		int sprite_width=al_get_bitmap_width(get_bitmap());
+	
+		//tell sprites what to do when time advances
+		
+		//if sprites haven't been told to move, do nothing
+		
+		//if sprites have been told to move, do something
+		if (key_up == true) {
+			angle = angle - .5;
+			key_up = false;
+		}
+		if (key_down == true) {
+			angle = angle + .5;
+			key_down = false;
+		}   
 	}
 	
 	void sprite::go() {

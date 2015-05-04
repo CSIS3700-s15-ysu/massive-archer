@@ -40,10 +40,20 @@ namespace csis3700 {
 		
 		//set default game state
 		currentState = AIMING;
-		turns = 0;
+		//turns = 0;
 		player_turn = 1;
 		hit_tank = false;
 		float x, y;
+		float angle;
+		float center_x;
+		float center_y;
+
+		//set the default key states
+		key_up = false;
+		key_down = false;
+		key_left = false;
+		key_right = false;
+		key_enter = false;
 		
 		//Background image
 		//NOT ACTUALLY DRAWING
@@ -52,6 +62,50 @@ namespace csis3700 {
 		if(!background_image) {
 			al_show_native_message_box(display, "Error", "Error", "Failed to load background image!", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 			al_destroy_display(display);
+		}
+
+		//Wands
+		//loads wand sprites image and tells it where to draw
+		//NOT ACTUALLY DRAWING
+		ALLEGRO_BITMAP *wand_image = al_load_bitmap("wand.png");
+		
+		for (int i=1; i<3; i++){
+			if (i==1) {
+				//i is equal to 1
+				//draw first tank
+				x = 190;
+				y = (world::HEIGHT * 0.75) + 35;
+				angle = 0;
+				center_x = 90;
+				center_y = 35;
+			}
+			else {
+				//i is equal to 2
+				//draw second tank
+				//tank will need flipped -- change bitmap flag to flip
+				
+				x = world::WIDTH - 190; //image is 80px
+				y = (world::HEIGHT * 0.75) + 35;
+				angle = 3.14;
+				center_x = 90;
+				center_y = 35;
+			}
+			
+			wand_sprites.push_back(
+				new sprite(
+					wand_image,
+					world::WIDTH,
+					world::HEIGHT,
+					x,
+					y,
+					angle,
+					0,
+					0,
+					center_x,
+					center_y,
+					0
+				)
+			);
 		}
 		
 		//Ghosts
@@ -85,15 +139,12 @@ namespace csis3700 {
 					0,
 					0,
 					0,
+					0,
+					0,
 					0
 				)
 			);
 		}
-
-		//Wands
-		//loads wand sprites image and tells it where to draw
-		//NOT ACTUALLY DRAWING
-		ALLEGRO_BITMAP *wand_image = al_load_bitmap("wand.png");
 	}
 
 	/**
@@ -141,6 +192,7 @@ namespace csis3700 {
 	 * Changes player turn.
 	 */
 
+	/*
 	int world::which_player (int turns) {
 		if (turns % 2 == 0) {
 			//even numbered turn
@@ -154,6 +206,7 @@ namespace csis3700 {
 			return 1;
 		}
 	}
+	*/
 
 	/**
 	 * Update the state of the world based on the event ev.
@@ -172,7 +225,7 @@ namespace csis3700 {
 		if(ev.type == ALLEGRO_EVENT_KEY_UP) {
 			switch(ev.keyboard.keycode) {
 				case ALLEGRO_KEY_UP:
-					//up arrow was released
+					key_up = true;
 			
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
@@ -182,6 +235,8 @@ namespace csis3700 {
 
 				case ALLEGRO_KEY_DOWN:
 					//down arrow was released
+					key_down = true;
+
 					if (currentState == AIMING) {
 						//call aiming function (still pseudo code)
 						//update text on screen
@@ -231,9 +286,9 @@ namespace csis3700 {
 							//no: show miss sprite
 								//change game state to AIMING
 								//increase turn count
-								++turns;
+								//++turns;
 								//change current player
-								player_turn = which_player(turns);
+								//player_turn = which_player(turns);
 					}
 											
 				break;
@@ -265,6 +320,13 @@ namespace csis3700 {
 			//tell sprites to update themselves
 			(*it)->sprite::advance_by_time(dt);
 		}
+
+		//for (std::vector<sprite*>::iterator it = wand_sprites.begin(); it != wand_sprites.end(); ++it) {
+		//	//tell sprites to update themselves
+		//	(*it)->sprite::advance_by_time(dt, key_up, key_down);
+		//}
+
+		wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
 	
 	}
 
@@ -276,12 +338,19 @@ namespace csis3700 {
 	void world::draw(ALLEGRO_DISPLAY *display) {
 		//draw background
 		al_draw_bitmap(background_image,0,0,0);
-		
+
 		//for loop with iterator to get sprites to load
 		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
 		}
+
+		for (std::vector<sprite*>::iterator it = wand_sprites.begin(); it != wand_sprites.end(); ++it) {
+			//draw sprites
+			(*it)->draw(display);
+		}
+		
+
 	}
 	
 }

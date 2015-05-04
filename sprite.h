@@ -37,9 +37,11 @@ namespace csis3700 {
 				std::size_t world_height,
 				float initial_x,
 				float initial_y,
-				int initial_angle,
+				float initial_angle,
 				float initial_vx,
 				float initial_vy,
+				float initial_center_x,
+				float initial_center_y,
 				int intitial_conditions);
 
 			/** Destructor */
@@ -55,6 +57,8 @@ namespace csis3700 {
 			/** Move time forward by the specified amount */
 			void advance_by_time(double dt);
 
+			void advance_by_time(double dt, bool &key_up, bool &key_down);
+
 			/** Return my bitmap */
 			ALLEGRO_BITMAP *get_bitmap() const;
 
@@ -69,11 +73,13 @@ namespace csis3700 {
 			std::size_t w_height;
 			float x;
 			float y;
-			int angle;
+			float angle;
 			float vx;
 			float vy;
-			bool move;
+			float center_x;
+			float center_y;
 			int conditions;
+			bool move;
 	};
 
 	class tank_sprite : public sprite {
@@ -89,7 +95,6 @@ namespace csis3700 {
 	class muzzle_sprite : public sprite {
 		/** things specific to muzzle sprite:
 		angle, image shown
-
 		*/
 		public:
 			

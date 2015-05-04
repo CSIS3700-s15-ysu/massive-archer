@@ -85,11 +85,23 @@ namespace csis3700 {
 
 		private:
 			ALLEGRO_BITMAP *background_image;
+
+			//stores our crap
 			std::vector<sprite*> ghost_sprites;
+			std::vector<sprite*> wand_sprites;
+			std::vector<sprite*> shell_sprites;
+
 			game_state_t currentState;
+
 			bool hit_tank;
-			int turns;
-			int player_turn;
+
+			bool key_up;
+			bool key_down;
+			bool key_left;
+			bool key_right;
+			bool key_enter;
+
+			bool player_turn;
 	};
 }
 
