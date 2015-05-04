@@ -51,7 +51,7 @@ namespace csis3700 {
 		float center_x;
 		float center_y;
 		
-		velocity = 0;
+		velocity = 50;
 
 
 
