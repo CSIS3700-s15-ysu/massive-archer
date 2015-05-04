@@ -25,16 +25,25 @@ sprite needs to:
 #include "sprite.h"
 
 namespace csis3700 {
-	sprite::sprite(ALLEGRO_BITMAP* initial_bitmap, std::size_t world_width, std::size_t world_height,
-		float initial_x, float initial_y, float initial_vx, float initial_vy) {
+	sprite::sprite(ALLEGRO_BITMAP* initial_image,
+				std::size_t world_width,
+				std::size_t world_height,
+				float initial_x,
+				float initial_y,
+				int initial_angle,
+				float initial_vx,
+				float initial_vy,
+				int intitial_conditions) {
 			//load images
-			sprite_image = initial_bitmap;
-			x = initial_x;
-			y = initial_y;
-			vx = initial_vx;
-			vy = initial_vy;
+			sprite_image = initial_image;
 			w_width = world_width;
 			w_height = world_height;
+			x = initial_x;
+			y = initial_y;
+			angle = initial_angle;
+			vx = initial_vx;
+			vy = initial_vy;
+			conditions = intitial_conditions;
 			//tell sprites they aren't allowed to move by default
 			move = false;	
 		}
@@ -52,7 +61,6 @@ namespace csis3700 {
 	void sprite::draw(ALLEGRO_DISPLAY *display) {
 		//sprites aren't allowed to move by default
 
-		
 		//draw a single sprite at x,y
 		al_draw_bitmap(sprite_image,x,y,0);
 	}

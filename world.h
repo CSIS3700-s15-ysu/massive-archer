@@ -85,7 +85,7 @@ namespace csis3700 {
 
 		private:
 			ALLEGRO_BITMAP *background_image;
-			std::vector<sprite*> the_sprites;
+			std::vector<sprite*> ghost_sprites;
 			game_state_t currentState;
 			bool hit_tank;
 			int turns;

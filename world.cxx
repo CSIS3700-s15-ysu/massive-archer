@@ -75,9 +75,25 @@ namespace csis3700 {
 				y = world::HEIGHT * 0.75;	
 			}
 			
-			the_sprites.push_back(new sprite(ghost_image, world::WIDTH,
-				world::HEIGHT, x, y));
+			ghost_sprites.push_back(
+				new sprite(
+					ghost_image,
+					world::WIDTH,
+					world::HEIGHT,
+					x,
+					y,
+					0,
+					0,
+					0,
+					0
+				)
+			);
 		}
+
+		//Wands
+		//loads wand sprites image and tells it where to draw
+		//NOT ACTUALLY DRAWING
+		ALLEGRO_BITMAP *wand_image = al_load_bitmap("wand.png");
 	}
 
 	/**
@@ -146,7 +162,7 @@ namespace csis3700 {
 
 		/*
 		//lab 7: mouse button was released, tell each sprite to go
-		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
+		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
 			(*it)->sprite::go();
 		}
 		*/
@@ -244,9 +260,8 @@ namespace csis3700 {
 	void world::advance_by_time(double dt) {    
 		// the world itself doesn't do anything when time is just advancing
 		
-		
 		//tell sprites to advance by time
-		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
+		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
 			//tell sprites to update themselves
 			(*it)->sprite::advance_by_time(dt);
 		}
@@ -263,7 +278,7 @@ namespace csis3700 {
 		al_draw_bitmap(background_image,0,0,0);
 		
 		//for loop with iterator to get sprites to load
-		for (std::vector<sprite*>::iterator it = the_sprites.begin(); it != the_sprites.end(); ++it) {
+		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
 		}
