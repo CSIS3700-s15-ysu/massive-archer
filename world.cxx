@@ -361,7 +361,8 @@ namespace csis3700 {
 				//do math here
 				
 				//set initial velocity
-				sprite::initial_shell_velocity(velocity);
+				shell_sprites[player_turn]->sprite::initial_shell_velocity(velocity);
+				
 				//launch the rocket thing!
 				animating_trajectory = true;
 				
