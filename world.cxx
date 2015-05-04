@@ -411,7 +411,7 @@ namespace csis3700 {
 		
 		//DRAW THE DAMN VELOCITY TEXT HERE
 		
-		al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %i", velocity); 
+		al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %f", velocity); 
 		
 		
 
