@@ -59,9 +59,6 @@ int main(int argc, char **argv){
 	al_init_font_addon();
 	al_init_ttf_addon();
 
-	//setting up font
-	ALLEGRO_FONT *font = al_load_ttf_font("PRIMETIME.ttf",36,NULL);
-
 	//setting up timer
 	ALLEGRO_TIMER *timer = al_create_timer(1.0 / FPS);
 	if(!timer) {

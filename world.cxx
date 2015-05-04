@@ -152,7 +152,7 @@ namespace csis3700 {
 		}
 		
 		//setting up font
-		velocity_font = al_load_ttf_font("PRIMETIME.ttf",36,NULL);
+		velocity_font = al_load_ttf_font("IronBrine.ttf",36,NULL);
 		
 	}
 
