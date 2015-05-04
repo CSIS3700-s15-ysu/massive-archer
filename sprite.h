@@ -63,7 +63,7 @@ namespace csis3700 {
 			void shell_advance_by_time(double dt, bool animating_trajectory);
 			
 			/** Shell velocity stuff **/
-			void initial_shell_velocity (float velocity_from_user);
+			static void initial_shell_velocity (float velocity_from_user);
 			float shell_y_velocity (float incoming_vy, float dt);
 			float shell_x_location (float incoming_x_position, float dt);
 			float shell_y_location (float incoming_y_position, float dt);
