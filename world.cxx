@@ -150,7 +150,7 @@ namespace csis3700 {
 				)
 			);
 		}
-			
+		/*	
 		//Velocity squares
 		//loads velocity square sprite image and tells it where to draw
 		//NOT ACTUALLY DRAWING	
@@ -176,6 +176,7 @@ namespace csis3700 {
 				)
 			);
 		}
+		*/
 	}
 
 	/**
@@ -383,8 +384,10 @@ namespace csis3700 {
 
 				wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
 				
+				/*
 				//velocity sprite stuff here
 				velocity_sprites[player_turn]->sprite::advance_by_time(key_left, key_right, dt);
+				*/
 			}
 		}
 	}
@@ -408,12 +411,12 @@ namespace csis3700 {
 			//draw sprites
 			(*it)->draw(display);
 		}
-		
+		/*
 		for (std::vector<sprite*>::iterator it = velocity_sprites.begin(); it != velocity_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
 		}
-		
+		*/
 
 	}
 	

@@ -90,7 +90,7 @@ namespace csis3700 {
 			std::vector<sprite*> ghost_sprites;
 			std::vector<sprite*> wand_sprites;
 			std::vector<sprite*> shell_sprites;
-			std::vector<sprite*> velocity_sprites;
+			//std::vector<sprite*> velocity_sprites;
 
 			game_state_t currentState;
 

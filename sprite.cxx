@@ -107,6 +107,7 @@ namespace csis3700 {
 		}   
 	}
 	
+	/*
 	void sprite::velocity_advance_by_time(double dt, bool &key_right, bool &key_left) {
 		//get sprite height and width
 		int sprite_height=al_get_bitmap_height(get_bitmap());
@@ -128,6 +129,7 @@ namespace csis3700 {
 			//do drawing here?
 		}   
 	}
+	*/
 	
 	
 	
