@@ -149,6 +149,31 @@ namespace csis3700 {
 					0
 				)
 			);
+			
+		//Velocity squares
+		//loads velocity square sprite image and tells it where to draw
+		//NOT ACTUALLY DRAWING	
+		ALLEGRO_BITMAP *velocity_image = al_load_bitmap("velocitysquare.png");
+		
+		for (int i=1; i=<5; i++){
+			x = ((world::WIDTH * 0.5) - 160) + i*32;
+			y = (world::HEIGHT * 0.5);
+			
+			velocity_sprites.push_back(
+				new sprite(
+					wand_image,
+					world::WIDTH,
+					world::HEIGHT,
+					x,
+					y,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				)
+			);
 		}
 	}
 
@@ -356,6 +381,9 @@ namespace csis3700 {
 				}
 
 				wand_sprites[player_turn]->sprite::advance_by_time(dt, key_up, key_down);
+				
+				//velocity sprite stuff here
+				velocity_sprites->sprite::advance_by_time(key_left, key_right, dt);
 			}
 		}
 	}
@@ -376,6 +404,11 @@ namespace csis3700 {
 		}
 
 		for (std::vector<sprite*>::iterator it = wand_sprites.begin(); it != wand_sprites.end(); ++it) {
+			//draw sprites
+			(*it)->draw(display);
+		}
+		
+		for (std::vector<sprite*>::iterator it = velocity_sprites.begin(); it != velocity_sprites.end(); ++it) {
 			//draw sprites
 			(*it)->draw(display);
 		}

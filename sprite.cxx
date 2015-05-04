@@ -107,6 +107,31 @@ namespace csis3700 {
 		}   
 	}
 	
+	void sprite::velocity_advance_by_time(double dt, bool &key_right, bool &key_left) {
+		//get sprite height and width
+		int sprite_height=al_get_bitmap_height(get_bitmap());
+		int sprite_width=al_get_bitmap_width(get_bitmap());
+	
+		//tell sprites what to do when time advances
+		
+		//if sprites haven't been told to move, do nothing
+		
+		//if sprites have been told to move, do something
+		if (key_left == true) {
+			velocity -= 100; //100 might be too big
+			key_left = false;
+			//do drawing here?
+		}
+		if (key_right == true) {
+			velocity += 100; //100 might be too big
+			key_right = false;
+			//do drawing here?
+		}   
+	}
+	
+	
+	
+	
 	void sprite::go() {
 		//tell sprites it's okay to move
 		move = true;
