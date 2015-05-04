@@ -409,7 +409,7 @@ namespace csis3700 {
 		
 		//DRAW THE DAMN VELOCITY TEXT HERE
 		//al_draw_text or al_draw_justified_text
-		al_draw_text(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, world::HEIGHT/2, ALLEGRO_ALIGN_CENTER, "Your Text Here!"); 
+		al_draw_text(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, velocity); 
 		
 		
 
