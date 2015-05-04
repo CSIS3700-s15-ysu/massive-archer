@@ -35,11 +35,14 @@ int main(int argc, char **argv){
 		exit(1);
 	}
 
+	/* We don't need the damn mouse for this. And it's failing to load.
+		So I'll just make it NOT load.  -.-
 	//loading mouse
 	if(!al_install_mouse()) {
 		cerr << "Failed to install mouse." << endl;
 		exit(1);
 	}
+	*/
 
 	//loading keyboard
 	if(!al_install_keyboard()) {
@@ -80,7 +83,7 @@ int main(int argc, char **argv){
 
 	al_register_event_source(event_queue, al_get_display_event_source(display)); 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer)); //timer
-	al_register_event_source(event_queue, al_get_mouse_event_source()); //mouse
+	//al_register_event_source(event_queue, al_get_mouse_event_source()); //mouse
 	al_register_event_source(event_queue, al_get_keyboard_event_source()); //keyboard
 	al_start_timer(timer);
 
