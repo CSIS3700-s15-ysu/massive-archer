@@ -32,13 +32,25 @@ float initial_shell_velocity (float velocity_from_user, float angle_from_user) {
 	//position after time step (t) is ((x(t + delta_t)), (y(t+ delta_t)))
 	//x_position, y_position are intended to represent ((x(t + delta_t)), (y(t+ delta_t)))
 	
-somereturntype shell_path (lots of stuff I'm sure) {
-	accel_x = 0; //technically not needed
-	accel_y = 300;
+float shell_velocity (float incoming_v_x, float incoming_v_y, float dt) {
+	//initial shell velocity has already been computed
+	//should also be able to call this whenever time updates
+	
+	float velocity_y, velocity_x;
+	float accel_y = 300;
+	//float accel_x = 0;
+	
+	//velocity of x won't change so not going to bother updating it	
+	//velocity_x = velocity_x_at_t + (accel_x * dt)
+	
+	velocity_x = incoming_v_x;
+	velocity_y = incoming_v_y + (accel_y * dt);
 
-	//first pass velocity_x_at_t will be initial_v_x
-	//velocity_x also won't change, so there's literally nothing else
-	//to do to it
+}
+	
+float shell_path (lots of stuff I'm sure) {
+
+
 	
 	velocity_x_at_t = initial_v_x;
 	
@@ -46,7 +58,7 @@ somereturntype shell_path (lots of stuff I'm sure) {
 	//after that recursion may be a good idea -- splitting it
 	//into another function will help with that
 	
-	//velocity_x = velocity_x_at_t + (accel_x * delta_t)
+
 	velocity_x = velocity_x_at_t; 
 	//velocity_x and velocity_x_at_t aren't going to change
 	velocity_y = velocity_y_at_t + (accel_y * delta_t)
