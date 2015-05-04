@@ -135,13 +135,15 @@ namespace csis3700 {
 	
 	//there's no function for shell_x_velocity because vx won't change (accel_x was defined as 0)
 	
-	void sprite::shell_y_velocity (float incoming_vy, float dt) {
+	float sprite::shell_y_velocity (float incoming_vy, float dt) {
 		//initial shell velocity (vy) has already been computed
 		//should also be able to call this whenever time updates
 
 		float accel_y = 300;
 	
 		vy = incoming_vy + (accel_y * dt);
+		
+		return vy;
 	}
 	
 	//do I need to pass vx if vx is essentially constant?
