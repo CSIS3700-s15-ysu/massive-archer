@@ -82,6 +82,7 @@ namespace csis3700 {
 			float center_y;
 			int conditions;
 			bool move;
+			float velocity;
 	};
 
 	class tank_sprite : public sprite {
