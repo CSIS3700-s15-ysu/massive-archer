@@ -12,6 +12,7 @@ Added:
 
 #include <cstdlib>
 #include <vector>
+#include <cmath>
 
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
@@ -59,7 +60,7 @@ namespace csis3700 {
 
 			void advance_by_time(double dt, bool &key_up, bool &key_down);
 			
-			void shell_advance_by_time(double dt);
+			void shell_advance_by_time(double dt, bool animating_trajectory);
 			
 			/** Shell velocity stuff **/
 			void initial_shell_velocity (float &velocity_from_user);
