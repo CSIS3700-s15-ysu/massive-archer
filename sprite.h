@@ -64,9 +64,9 @@ namespace csis3700 {
 			
 			/** Shell velocity stuff **/
 			void initial_shell_velocity (float &velocity_from_user);
-			void shell_y_velocity (float incoming_vy, float dt);
-			void shell_x_location (float incoming_x_position, float dt);
-			void shell_y_location (float incoming_y_position, float dt);
+			float shell_y_velocity (float incoming_vy, float dt);
+			float shell_x_location (float incoming_x_position, float dt);
+			float shell_y_location (float incoming_y_position, float dt);
 			
 			
 			/** Return my bitmap */

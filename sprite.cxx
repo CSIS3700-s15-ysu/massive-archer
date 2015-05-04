@@ -110,10 +110,10 @@ namespace csis3700 {
 		//if sprites have been told to move, do something
 		if (animating_trajectory == true) {
 			//ok, time to change stuff
-			//initial velocity vectors have already been calculated and stored (I hope)
-			
-			//need to update the x and y positions
-			//fuck. y += will just keep the shell going up and up and up
+						
+			//update the x and y positions
+			x = shell_x_location(x, dt);
+			y = shell_y_location(y, dt);
 			
 			
 		
@@ -147,16 +147,17 @@ namespace csis3700 {
 	}
 	
 	//do I need to pass vx if vx is essentially constant?
-	void sprite::shell_x_location (float incoming_x_position, float dt) {
+	float sprite::shell_x_location (float incoming_x_position, float dt) {
 	
 		x = incoming_x_position + (vx * dt);
-
+		return x;
+		
 	}	
 
-	void sprite::shell_y_location (float incoming_y_position, float dt) {
+	float sprite::shell_y_location (float incoming_y_position, float dt) {
 	
 		y = incoming_y_position + (shell_y_velocity(vy, dt) * dt);
-
+		return y;
 	}
 		
 	void sprite::go() {
