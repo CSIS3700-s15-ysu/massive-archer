@@ -50,19 +50,6 @@ float shell_velocity (float incoming_v_x, float incoming_v_y, float dt) {
 }
 	
 float shell_path (lots of stuff I'm sure) {
-
-
-	
-	velocity_x_at_t = initial_v_x;
-	
-	//first pass velocity_y_at_t will be initial_v_y
-	//after that recursion may be a good idea -- splitting it
-	//into another function will help with that
-	
-
-	velocity_x = velocity_x_at_t; 
-	//velocity_x and velocity_x_at_t aren't going to change
-	velocity_y = velocity_y_at_t + (accel_y * delta_t)
 	
 	//would we use a loop or recursion for this?
 	//loop or recursion would end when y_position = HEIGHT * 0.75 (height of tanks)
@@ -73,27 +60,4 @@ float shell_path (lots of stuff I'm sure) {
 }	
 
 
-}
-
-
-
-void aim_angle (key event) {
-	if key event = up then
-		increase angle
-		
-	else
-		decrease angle
-		
-	tell sprite to move
-}
-
-void aim_velocity (key event) {
-	if key event = right then
-		increase velocity
-		
-	else
-		decrease velocity
-		
-	tell sprite to move
-}
-
+dots/block to represent velocity_from_user
