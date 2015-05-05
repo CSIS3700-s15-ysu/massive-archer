@@ -52,24 +52,23 @@ namespace csis3700 {
 			void advance_by_time(double dt, bool &key_up, bool &key_down);
 			
 			void shell_advance_by_time(double dt, bool ok_to_fire);
+
+			void set_sprite_image(ALLEGRO_BITMAP* initial_image);
 			
 			/** Shell velocity stuff **/
-			void initial_shell_velocity (float velocity_from_user);
+			void initial_shell_velocity (float velocity_from_user, float angle);
 			float shell_y_velocity (float incoming_vy, float dt);
 			float shell_x_location (float incoming_x_position, float dt);
 			float shell_y_location (float incoming_y_position, float dt);
 			
 			float return_x() {return x;}
 			float return_y() {return y;}
-			
-			
-			
+			float return_angle() {return angle;}
 			
 			/** Return my bitmap */
 			ALLEGRO_BITMAP *get_bitmap() const;
 
 			// Add other methods here
-
 
 		protected:
 			// Put your i-vars here
@@ -85,57 +84,6 @@ namespace csis3700 {
 			float center_y;
 			int conditions;
 			bool move;
-	};
-
-	class tank_sprite : public sprite {
-		/** things specific to tank sprite:
-		image shown
-		*/
-		public:
-			
-		protected:
-			
-	};
-
-	class muzzle_sprite : public sprite {
-		/** things specific to muzzle sprite:
-		angle, image shown
-		*/
-		public:
-			
-		
-		protected:
-			
-	};
-
-	class shell_sprite : public sprite {
-		/** things specific to shell sprite:
-
-		*/
-		public:
-
-		protected:
-
-	};
-
-	class hit_sprite : public sprite {
-		/** things specific to hit sprite:
-		image shown (tank blown up/broken)
-		*/
-		public:
-			
-		protected:
-
-	};
-
-	class miss_sprite : public sprite {
-		/** things specific to miss sprite:
-		image shown (generic impact image?)
-		*/
-		public:
-			
-		protected:
-
 	};
 }
 

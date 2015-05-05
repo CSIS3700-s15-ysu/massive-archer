@@ -103,17 +103,18 @@ namespace csis3700 {
 			x = shell_x_location(x, dt);
 			y = shell_y_location(y, dt);
 		}
-
 	}
-	
+
+	void sprite::set_sprite_image(ALLEGRO_BITMAP* initial_image) {
+		sprite_image = initial_image;
+	}
 		
 	//originals are in pseudocodesnippets.txt -- mostly I changed the functions from floats to voids
 	//I think this is the best place to put it since we're changing the sprites x, y, vx, vy
-	void sprite::initial_shell_velocity (float velocity_from_user) {
+	void sprite::initial_shell_velocity (float velocity_from_user, float angle) {
 
 		vy = velocity_from_user * sin(angle);
 		vx = velocity_from_user * cos(angle);
-
 	}
 	
 	//there's no function for shell_x_velocity because vx won't change (accel_x was defined as 0)
@@ -128,7 +129,6 @@ namespace csis3700 {
 		
 		return vy;
 	}
-	
 
 	float sprite::shell_x_location (float incoming_x_position, float dt) {
 	
@@ -143,9 +143,6 @@ namespace csis3700 {
 		return y;
 	}
 	
-
-		
-
 	/** Return my bitmap */
 	ALLEGRO_BITMAP *sprite::get_bitmap() const {
 

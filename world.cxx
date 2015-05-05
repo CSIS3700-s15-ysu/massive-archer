@@ -31,21 +31,17 @@ namespace csis3700 {
 	world::world(ALLEGRO_DISPLAY *display, std::size_t window_width, std::size_t window_height) {
 		
 		//set default game state
-		//currentState = AIMING;
 		animating_trajectory = false;
 		shot_is_correct = false;
 		shot_hit_something = false;
-		//turns = 0;
 		player_turn = 0;
-		//hit_tank = false;
 		float x, y;
 		float angle;
 		float center_x;
 		float center_y;
-		
+		shells = 0;
+		winner = 0;
 		velocity = 500;
-
-
 
 		//set the default key states
 		key_up = false;
@@ -64,45 +60,6 @@ namespace csis3700 {
 			al_destroy_display(display);
 		}
 
-		
-		//shells
-		//loads shell sprites image and tells it where to draw
-		//NOT ACTUALLY DRAWING
-		ALLEGRO_BITMAP *shell_image = al_load_bitmap("shell_sprite.png");
-		
-		//these should draw somewhat close to the tip of the wands
-		for (int i=1; i<3; i++){
-			if (i==1) {
-				//player 1 shell
-				x = 110;
-				y = (world::HEIGHT * 0.75);
-			}
-			
-			else {
-				//player 2 shell
-								
-				x = world::WIDTH - 180;
-				y = (world::HEIGHT * 0.75) + 20;
-
-			}
-			
-			shell_sprites.push_back(
-				new sprite(
-					shell_image,
-					world::WIDTH,
-					world::HEIGHT,
-					x,
-					y,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0
-				)
-			);
-		}
-		
 		//Wands
 		//loads wand sprites image and tells it where to draw
 		//NOT ACTUALLY DRAWING
@@ -209,7 +166,6 @@ namespace csis3700 {
 	 */
 	world& world::operator =(const world& other) { assert(false);}
 
-
 	/**
 	 * Update the state of the world based on the event ev.
 	 */
@@ -235,7 +191,6 @@ namespace csis3700 {
 
 				break;
 
-
 				case ALLEGRO_KEY_LEFT:
 					//left arrow was released
 					key_left = true;
@@ -253,7 +208,6 @@ namespace csis3700 {
 					key_space = true;
 						
 				break;
-
 			}
 		}
 	}
@@ -299,36 +253,73 @@ namespace csis3700 {
 
 		if (animating_trajectory) {
 			//animate that shell_sprite
-			shell_sprites[player_turn]->sprite::shell_advance_by_time(dt, animating_trajectory);
+			shell_sprites[shells]->sprite::shell_advance_by_time(dt, animating_trajectory);
 			float sprite_x, sprite_y, sprite_w, sprite_h, tank_x, tank_y, tank_w, tank_h;
 			
 			//I need the current x and y values here
-			sprite_x = shell_sprites[player_turn]->sprite::return_x();
-			sprite_y = shell_sprites[player_turn]->sprite::return_y();
+			sprite_x = shell_sprites[shells]->sprite::return_x();
+			sprite_y = shell_sprites[shells]->sprite::return_y();
 
-			
-			shot_hit_something = world::bounding_box_collision(sprite_x, sprite_y);
-			
-			
-			if (sprite_y == world::HEIGHT || sprite_x == world::WIDTH) {
-				//shell hit ground or went out of frame
-
+			if (sprite_y > 600) {
+				shot_hit_something = true;
 			}
-			
-				
-			
 
-			if (shot_is_correct && shot_hit_something) {
-				//game over, show victory screen + ending explosion
-				animating_trajectory = false;
-				
+			if (player_turn == 0) {
+				//trying to hit player 2
+				if (sprite_x > world::WIDTH - 250 && 
+					sprite_x < world::WIDTH - 100 &&
+					sprite_y > world::HEIGHT * 0.70 &&
+					sprite_y < world::HEIGHT * 0.80
+					) {
+					shot_is_correct = true;
+					shot_hit_something = true;
+
+					ALLEGRO_BITMAP *ghosthit = al_load_bitmap("ghosthit.png");
+					ghost_sprites[1]->set_sprite_image(ghosthit);
+
+					winner = 1;
+				}
+			}
+			else if (player_turn == 1) {
+				//trying to hit player 1
+				if (sprite_x > 100 &&
+					sprite_x < 180 &&
+					sprite_y > world::HEIGHT * 0.70 &&
+					sprite_y < world::HEIGHT * 0.80
+					) {
+					shot_is_correct = true;
+					shot_hit_something = true;
+
+					ALLEGRO_BITMAP *ghosthit = al_load_bitmap("ghosthit.png");
+					ghost_sprites[0]->set_sprite_image(ghosthit);
+
+					winner = 2;
+				}
 			}
 			
 			if (shot_hit_something) {
 				//show explosion
 				animating_trajectory = false;
+				shot_hit_something = false;
 				velocity = 500;
-				
+				shells++;
+
+				ALLEGRO_BITMAP *ghosthit = al_load_bitmap("miss_sprite.png");
+				explosion_sprites.push_back(
+					new sprite(
+						ghosthit,
+						world::WIDTH,
+						world::HEIGHT,
+						sprite_x,
+						world::HEIGHT - 50,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0
+					)
+				);
 				
 				if (player_turn == 0) {
 					player_turn = 1;
@@ -340,24 +331,45 @@ namespace csis3700 {
 		}
 		else {
 			if (key_space == true) {
-				//determine if the rocket thing will hit the other player
-				//draw sprites here
-				//shell_sprites[player_turn]->draw(world::display);
-				//al_draw_bitmap(
-				
-				//do math here
-				
-				
+				//shells
+				//loads shell sprites image and tells it where to draw
+				//NOT ACTUALLY DRAWING
+				ALLEGRO_BITMAP *shell_image = al_load_bitmap("shell_sprite.png");
+				float x, y;
+				//these should draw somewhat close to the tip of the wands
+
+				if (player_turn == 0) {
+					//player 1 shell
+					x = 110;
+					y = (world::HEIGHT * 0.75);
+				}
+				else if (player_turn == 1) {
+					//player 2 shell		
+					x = world::WIDTH - 180;
+					y = (world::HEIGHT * 0.75) + 20;
+				}
+
+				shell_sprites.push_back(
+					new sprite(
+						shell_image,
+						world::WIDTH,
+						world::HEIGHT,
+						x,
+						y,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0
+					)
+				);
 				
 				//set initial velocity
-				shell_sprites[player_turn]->sprite::initial_shell_velocity(velocity);
+				shell_sprites[shells]->sprite::initial_shell_velocity(velocity, wand_sprites[player_turn]->return_angle());
 				
 				//launch the rocket thing!
 				animating_trajectory = true;
-				
-				
-				
-				
 
 				key_space = false;
 			}
@@ -375,19 +387,17 @@ namespace csis3700 {
 				//velocity stuff here
 				if (key_left == true) {
 					key_left = false;			
-					if (velocity >= 0) {
+					if (velocity >= 200) {
 						velocity -= 100;
 					}
 				}
 				
 				if (key_right == true) {			
 					key_right = false;
-					if (velocity <= 1000) {
+					if (velocity <= 900) {
 						velocity += 100;
 					}
 				}   
-				
-				
 			}
 		}
 	}
@@ -411,20 +421,27 @@ namespace csis3700 {
 			//draw sprites
 			(*it)->draw(display);
 		}
+
+		for (std::vector<sprite*>::iterator it = explosion_sprites.begin(); it != explosion_sprites.end(); ++it) {
+			//draw sprites
+			(*it)->draw(display);
+		}
 		
 		//shell sprites need to be drawn here, otherwise I can't get them to show up on the screen AT ALL
 		//sorry, not sorry
 		if (animating_trajectory == true) {
-			
-				shell_sprites[player_turn]->draw(display);		
+			shell_sprites[shells]->draw(display);		
 		}
-		
-		
-		//DRAW THE DAMN VELOCITY TEXT HERE
-		al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %g", velocity); 
-		
-		
 
+		if (winner == 1) {
+			al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "THE WINNER IS 1", velocity);
+		}
+		else if (winner == 2) {
+			al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "THE WINNER IS 2", velocity);
+		}
+		else {
+			//DRAW THE DAMN VELOCITY TEXT HERE
+			al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %g", velocity);
+		}	
 	}
-	
 }

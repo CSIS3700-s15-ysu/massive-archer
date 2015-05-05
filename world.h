@@ -19,10 +19,6 @@ namespace csis3700 {
 			static const std::size_t WIDTH=800;
 			static const std::size_t HEIGHT=600;
 
-			//typedef/enum
-			//enum game_state_t{AIMING, IMPACT, GAME_OVER};
-			// removed INCOMING game state
-
 			/**
 			 * Construct the world. The display is passed in simply to make it
 			 * possible to modify options or access the backbuffer. DO NOT
@@ -48,21 +44,9 @@ namespace csis3700 {
 			world& operator =(const world& other);
 
 			/**
-			 * Changes the game state.
-			 */
-			//game_state_t change_game_state (game_state_t incoming_state);
-
-			/**
-			 * Changes player turn.
-			 */
-			
-			int which_player (int turns);
-
-			/**
 			 * Update the state of the world based on the event ev.
 			 */
 			void handle_event(ALLEGRO_EVENT ev);
-
 
 			bool bounding_box_collision(float b1_x, float b1_y);
 
@@ -86,8 +70,7 @@ namespace csis3700 {
 			std::vector<sprite*> ghost_sprites;
 			std::vector<sprite*> wand_sprites;
 			std::vector<sprite*> shell_sprites;
-
-			//game_state_t currentState;
+			std::vector<sprite*> explosion_sprites;
 
 			bool shot_hit_something;
 			bool shot_is_correct;
@@ -103,7 +86,10 @@ namespace csis3700 {
 			bool player_turn;
 			
 			float velocity;
-			
+
+			int shells;
+
+			int winner;
 	};
 }
 
