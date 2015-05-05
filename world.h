@@ -20,7 +20,7 @@ namespace csis3700 {
 			static const std::size_t HEIGHT=600;
 
 			//typedef/enum
-			enum game_state_t{AIMING, IMPACT, GAME_OVER};
+			//enum game_state_t{AIMING, IMPACT, GAME_OVER};
 			// removed INCOMING game state
 
 			/**
@@ -50,7 +50,7 @@ namespace csis3700 {
 			/**
 			 * Changes the game state.
 			 */
-			game_state_t change_game_state (game_state_t incoming_state);
+			//game_state_t change_game_state (game_state_t incoming_state);
 
 			/**
 			 * Changes player turn.
@@ -62,6 +62,9 @@ namespace csis3700 {
 			 * Update the state of the world based on the event ev.
 			 */
 			void handle_event(ALLEGRO_EVENT ev);
+
+
+			bool bounding_box_collision(float b1_x, float b1_y);
 
 			/**
 			 * Advance the state of the world forward by the specified time.
@@ -84,7 +87,7 @@ namespace csis3700 {
 			std::vector<sprite*> wand_sprites;
 			std::vector<sprite*> shell_sprites;
 
-			game_state_t currentState;
+			//game_state_t currentState;
 
 			bool shot_hit_something;
 			bool shot_is_correct;
@@ -95,6 +98,7 @@ namespace csis3700 {
 			bool key_left;
 			bool key_right;
 			bool key_enter;
+			bool key_space;
 
 			bool player_turn;
 			

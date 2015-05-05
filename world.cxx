@@ -43,7 +43,7 @@ namespace csis3700 {
 		float center_x;
 		float center_y;
 		
-		velocity = 50;
+		velocity = 500;
 
 
 
@@ -53,6 +53,7 @@ namespace csis3700 {
 		key_left = false;
 		key_right = false;
 		key_enter = false;
+		key_space = false;
 		
 		//Background image
 		//NOT ACTUALLY DRAWING
@@ -72,17 +73,17 @@ namespace csis3700 {
 		//these should draw somewhat close to the tip of the wands
 		for (int i=1; i<3; i++){
 			if (i==1) {
-				//i is equal to 1
-				//draw first tank
-				x = 250;
-				y = (world::HEIGHT * 0.75) + 10;
+				//player 1 shell
+				x = 110;
+				y = (world::HEIGHT * 0.75);
 			}
+			
 			else {
-				//i is equal to 2
-				//draw second tank
+				//player 2 shell
 								
-				x = world::WIDTH - 300;
-				y = (world::HEIGHT * 0.75) + 10;
+				x = world::WIDTH - 180;
+				y = (world::HEIGHT * 0.75) + 20;
+
 			}
 			
 			shell_sprites.push_back(
@@ -208,72 +209,29 @@ namespace csis3700 {
 	 */
 	world& world::operator =(const world& other) { assert(false);}
 
-	/**
-	* Changes the game state.
-	*/
-	world::game_state_t world::change_game_state (game_state_t incoming_state) {
-		if (incoming_state == AIMING) {
-			return IMPACT;
-		}
-		
-		else if (incoming_state == IMPACT) {
-			if (shot_is_correct && shot_hit_something) {
-				//the shell hit the tank
-				return GAME_OVER;
-			}
-		
-			else {
-				//the shell didn't hit the tank
-				return AIMING;
-			}
-		}
-	}
-
 
 	/**
 	 * Update the state of the world based on the event ev.
 	 */
 	void world::handle_event(ALLEGRO_EVENT ev) {
-
-		/*
-		//lab 7: mouse button was released, tell each sprite to go
-		for (std::vector<sprite*>::iterator it = ghost_sprites.begin(); it != ghost_sprites.end(); ++it) {
-			(*it)->sprite::go();
-		}
-		*/
-		
-		//for project 1, we need to know what event is happening AND the state of the world
 		
 		if(ev.type == ALLEGRO_EVENT_KEY_UP) {
 			switch(ev.keyboard.keycode) {
 				case ALLEGRO_KEY_UP:
+					//up arrow was released
 					key_up = true;
 			
-					if (currentState == AIMING) {
-						//call aiming function
-						//update text on screen
-					}
 				break;
 
 				case ALLEGRO_KEY_DOWN:
 					//down arrow was released
 					key_down = true;
 
-					if (currentState == AIMING) {
-						//call aiming function
-						//update text on screen
-					}
 				break;
 
 				case ALLEGRO_KEY_RIGHT:
 					//right arrow was released
 					key_right = true;
-			
-					if (currentState == AIMING) {
-						//call aiming function
-						//update text on screen
-						
-					}
 
 				break;
 
@@ -282,57 +240,55 @@ namespace csis3700 {
 					//left arrow was released
 					key_left = true;
 			
-					if (currentState == AIMING) {
-						//call aiming function
-						//update text on screen        				
-					}
-
 				break;
 
 				case ALLEGRO_KEY_ENTER:
 					//enter key was released
 					key_enter = true;
-
-					if (currentState == AIMING) {
-						//done entering stuff, fire
-												
-						//change game state to IMPACT
-						//should probably call the change state fnc instead
-						currentState = IMPACT;
-						//add text to screen instructing user to press enter again
-							//cause lazy
-					}
-					
-					else if (currentState == IMPACT) {
-						//do math to see where impact occurs
-						//did it hit the other tank?
-							//yes: show tank hit sprite
-								//change game state to GAME_OVER
-								//display winner after number of turns
-							//no: show miss sprite
-								//change game state to AIMING
-								//increase turn count
-								//++turns;
-								//change current player
-								//player_turn = which_player(turns);
-					}
-											
+						
+				break;
+				
+				case ALLEGRO_KEY_SPACE:
+					//space bar was released
+					key_space = true;
+						
 				break;
 
-				case ALLEGRO_KEY_SPACE:
-					//space key was released
-					//skip to next game state
-					currentState = change_game_state(currentState);
-					break;
-
-				/*
-				//I don't think we need this bit
-				case ALLEGRO_KEY_ESCAPE:
-					//exit
-					
-					break;*/
 			}
 		}
+	}
+	
+	bool world::bounding_box_collision(float b1_x, float b1_y) {
+		float b1_w, b1_h, b2_x, b2_y, b2_w, b2_h, b3_x, b3_y, b3_w, b3_h;
+		
+		b1_w = 50;
+		b1_h = 50;
+		b2_x = 100; //location of player 1 ghost
+		b2_y = world::HEIGHT * 0.75;
+		b2_w = 80;
+		b2_h = 76;
+		b3_x = world::WIDTH - 180;
+		b3_y = b2_y;
+		b3_w = b2_w;
+		b3_h = b2_h;
+		
+		//b1 is shell, b2 is player 1 ghost, b3 is player 2 ghost
+		
+    	if ((b1_x > b2_x + b2_w - 1) || // is b1 on the right side of b2?
+        	(b1_y > b2_y + b2_h - 1) || // is b1 under b2?
+        	(b2_x > b1_x + b1_w - 1) || // is b2 on the right side of b1?
+        	(b2_y > b1_y + b1_h - 1) || // is b2 under b1?
+        	(b1_x > b3_x + b3_w - 1) ||	// is b1 on the right side of b3?
+        	(b1_y > b3_y + b3_h - 1) || // is b1 under b3?
+        	(b3_x > b1_x + b1_w - 1) || // is b3 on the right side of b1?
+        	(b3_y > b1_y + b1_h - 1))	// is b3 under b1?
+    	{
+        	// no collision
+        	return 0;
+    	}
+ 
+    	// collision
+    	return 1;
 	}
 
 	/**
@@ -344,41 +300,50 @@ namespace csis3700 {
 		if (animating_trajectory) {
 			//animate that shell_sprite
 			shell_sprites[player_turn]->sprite::shell_advance_by_time(dt, animating_trajectory);
+			float sprite_x, sprite_y, sprite_w, sprite_h, tank_x, tank_y, tank_w, tank_h;
 			
-			//this is kind of pseudocode-ish
-			if (sprite_y == world::HEIGHT) {
-				//shell hit ground
-				shot_hit_something = true;
+			//I need the current x and y values here
+			sprite_x = shell_sprites[player_turn]->sprite::return_x();
+			sprite_y = shell_sprites[player_turn]->sprite::return_y();
+
+			
+			shot_hit_something = world::bounding_box_collision(sprite_x, sprite_y);
+			
+			
+			if (sprite_y == world::HEIGHT || sprite_x == world::WIDTH) {
+				//shell hit ground or went out of frame
+
 			}
 			
-			else if ((sprite_x == tank_x) && (sprite_y == tank_y)) {
-				//shell hit other tank
-				shot_hit_something = true;
-				shot_is_correct = true;
-			}
-			
-			else {
-				//shell hasn't impacted yet
-				shot_hit_something = false;
-				shot_is_correct = false;			
-			}
+				
 			
 
 			if (shot_is_correct && shot_hit_something) {
 				//game over, show victory screen + ending explosion
 				animating_trajectory = false;
+				
 			}
-			else if (shot_hit_something) {
+			
+			if (shot_hit_something) {
 				//show explosion
 				animating_trajectory = false;
+				velocity = 500;
+				
+				
+				if (player_turn == 0) {
+					player_turn = 1;
+				}
+				else if (player_turn == 1) {
+					player_turn = 0;
+				}
 			}
 		}
 		else {
-			if (key_enter) {
+			if (key_space == true) {
 				//determine if the rocket thing will hit the other player
 				//draw sprites here
-				shell_sprites[player_turn]->draw(display);
-				
+				//shell_sprites[player_turn]->draw(world::display);
+				//al_draw_bitmap(
 				
 				//do math here
 				
@@ -394,13 +359,7 @@ namespace csis3700 {
 				
 				
 
-				if (player_turn == 0) {
-					player_turn = 1;
-				}
-				else if (player_turn == 1) {
-					player_turn = 0;
-				}
-				key_enter = false;
+				key_space = false;
 			}
 			else {
 				//tell sprites to advance by time
@@ -416,15 +375,15 @@ namespace csis3700 {
 				//velocity stuff here
 				if (key_left == true) {
 					key_left = false;			
-					if (velocity > 10) {
-						velocity -= 10;
+					if (velocity >= 0) {
+						velocity -= 100;
 					}
 				}
 				
 				if (key_right == true) {			
 					key_right = false;
-					if (velocity < 90) {
-						velocity += 10;
+					if (velocity <= 1000) {
+						velocity += 100;
 					}
 				}   
 				
@@ -452,6 +411,14 @@ namespace csis3700 {
 			//draw sprites
 			(*it)->draw(display);
 		}
+		
+		//shell sprites need to be drawn here, otherwise I can't get them to show up on the screen AT ALL
+		//sorry, not sorry
+		if (animating_trajectory == true) {
+			
+				shell_sprites[player_turn]->draw(display);		
+		}
+		
 		
 		//DRAW THE DAMN VELOCITY TEXT HERE
 		al_draw_textf(velocity_font, al_map_rgb(255,255,255), world::WIDTH/2, 40, ALLEGRO_ALIGN_CENTER, "Current velocity: %g", velocity); 

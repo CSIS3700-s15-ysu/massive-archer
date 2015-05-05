@@ -51,7 +51,7 @@ namespace csis3700 {
 
 			void advance_by_time(double dt, bool &key_up, bool &key_down);
 			
-			void shell_advance_by_time(double dt);
+			void shell_advance_by_time(double dt, bool ok_to_fire);
 			
 			/** Shell velocity stuff **/
 			void initial_shell_velocity (float velocity_from_user);
@@ -59,13 +59,17 @@ namespace csis3700 {
 			float shell_x_location (float incoming_x_position, float dt);
 			float shell_y_location (float incoming_y_position, float dt);
 			
+			float return_x() {return x;}
+			float return_y() {return y;}
+			
+			
+			
 			
 			/** Return my bitmap */
 			ALLEGRO_BITMAP *get_bitmap() const;
 
 			// Add other methods here
-			/** this tells sprites that it's okay to move **/
-			void go();
+
 
 		protected:
 			// Put your i-vars here

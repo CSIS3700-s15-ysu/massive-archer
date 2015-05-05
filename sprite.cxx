@@ -95,19 +95,18 @@ namespace csis3700 {
 	}
 	
 	//for shell sprites
-	void sprite::shell_advance_by_time(double dt) {
+	void sprite::shell_advance_by_time(double dt, bool ok_to_fire) {
 		//tell sprites what to do when time advances
-						
-		//update the x and y positions
-		x = shell_x_location(x, dt);
-		y = shell_y_location(y, dt);
+		
+		if (ok_to_fire == true) {				
+			//update the x and y positions
+			x = shell_x_location(x, dt);
+			y = shell_y_location(y, dt);
+		}
 
-		//check for impact?
 	}
 	
-	
-	
-	
+		
 	//originals are in pseudocodesnippets.txt -- mostly I changed the functions from floats to voids
 	//I think this is the best place to put it since we're changing the sprites x, y, vx, vy
 	void sprite::initial_shell_velocity (float velocity_from_user) {
@@ -143,11 +142,9 @@ namespace csis3700 {
 		y = incoming_y_position + (shell_y_velocity(vy, dt) * dt);
 		return y;
 	}
+	
+
 		
-	void sprite::go() {
-		//tell sprites it's okay to move
-		move = true;
-	}
 
 	/** Return my bitmap */
 	ALLEGRO_BITMAP *sprite::get_bitmap() const {
